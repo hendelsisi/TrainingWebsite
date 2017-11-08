@@ -1,0 +1,53 @@
+﻿@model IEnumerable<AppFactory.DAL.Message>
+
+<table class="table">
+    <tr>
+
+        <th>
+            @Html.DisplayName("Sender")
+        </th>
+        <th>
+            @Html.DisplayName("Date")
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Subject)
+        </th>
+        <th>
+            <p>Action</p>
+        </th>
+    </tr>
+
+    @{ int num = 0; }
+    @{ int num2 = 0; }
+    @foreach (var item in Model)
+    {
+        <tr>
+            @Html.HiddenFor(modelItem => item.MessageID)
+            <td>
+                @Html.DisplayFor(modelItem => item.User1.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SentDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Subject)
+            </td>
+            <td>
+                <button type="button" class="btn btn-default btnShowMessage" data-msgnum="message_@num" data-toggle="modal" data-target="#ShowMessage">Show Message</button>
+                <button type="button" class="btn btn-default btnReply" data-msgnum="reply_@num" data-toggle="modal" data-target="#Reply">Reply</button>
+                <div id="message_@num" style="display: none;">
+                    @Html.Partial("ShowMessage", item)
+                </div>
+                <div id="reply_@num" style="display: none;">
+                    @{ var data = new AppFactory.DAL.Message { SenderID = item.SenderID, UserID = item.UserID }; }
+                    @Html.Partial("Reply", data)
+                </div>
+            </td>
+        </tr>
+        num++;
+        num2++;
+    }
+
+</table>
+
+

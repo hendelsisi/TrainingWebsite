@@ -1,0 +1,47 @@
+﻿@model IEnumerable<AppFactory.DAL.Application_Applicant>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Application.ApplicationName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SubmissionDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Application.ApplicationName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SubmissionDate)
+            </td>
+            <td>
+                @if (item.Status == 0)
+                {
+                    @Html.DisplayName("Rejected")
+                }
+                else if (item.Status == 1)
+                {
+                    @Html.DisplayName("Not Submitted")
+                }
+                else if (item.Status == 5)
+                {
+                    @Html.DisplayName("Accepted")
+                }
+                else
+                {
+                    @Html.DisplayName("Current Application")
+                }
+            </td>
+
+        </tr>
+    }
+
+</table>

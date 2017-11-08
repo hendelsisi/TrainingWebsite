@@ -1,0 +1,203 @@
+﻿@model AppFactory.MVC.ViewModels.ApplicantDetailsViewModel
+
+@{
+    ViewBag.Title = "AppDetails";
+}
+
+@section customCss {
+    <style>
+        #afeg-header-section {
+            position: fixed;
+            background-color: #82dafe;
+        }
+
+        #afeg-main {
+            margin-top: 50px;
+        }
+    </style>
+}
+<div id="afeg-main">
+    <div class="container">
+        <div class="row">
+            <div class="afeg-spacer afeg-spacer-sm"></div>
+            <div class="col-md-4">
+                <img src="../@(((AppFactory.MVC.ViewModels.ProfileViewModel)Session["USER"]).Avatar)" style="border-radius: 50%;" alt="UserPhoto" height="200" width="200" />
+            </div>
+            <div class="col-md-8">
+
+                <div class="content-wrapper">
+                    <div>
+                        <h4 class="text-bold">@Model.FirstName  @Model.LastName</h4>
+                        <hr />
+                        
+                        <dl class="dl-horizontal">
+
+                            <dt>
+                                @Html.DisplayName("First Name")
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.FirstName)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayName("Last Name")
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.LastName)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Gender)
+                            </dt>
+
+                            <dd>
+                                @if (Model.Gender == true)
+                                {
+                                    @Html.DisplayName("Male")
+                                }
+                                else
+                                {
+                                    @Html.DisplayName("Female")
+                                }
+
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayName("E-mail")
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Email)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayName("Address")
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Address)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.City)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.City)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayName("Country")
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Country.CountryName)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Nationality)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Nationality)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayName("Date of Birth")
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.DateOfBirth)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayName("Telephone Number")
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.TelephoneNumber)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayName("Mobile Number")
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.MobileNumber)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayName("Postal Code")
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.PostalCode)
+                            </dd>
+                            <hr>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Resume)
+                            </dt>
+
+                            <dd>
+                                
+                                @if (!(String.IsNullOrEmpty(Model.Resume) || String.IsNullOrWhiteSpace(Model.Resume)))
+                                {
+                                    @Html.ActionLink("Download File", "downloadFile", "User", new { FilePath = Model.Resume }, new { @class = "btn btn-default" })
+                                }
+                                else
+                                {
+                                    @Html.DisplayName("You haven't uploaded your CV yet")
+                                    @Html.Partial("UploadCV" , Model.Applicant)
+                                }
+                                
+                            </dd>
+                            <hr>
+                            <dt>
+                                @Html.DisplayName("Cover Letter")
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.CoverLetter)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayName("Status")
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.WorkflowStatus)
+                            </dd>
+
+                        </dl>
+                        <hr>
+
+                        @if (Model.Edu != null)
+                        {
+                            @Html.Partial("EducationPartial", Model.Edu)
+                            <hr>
+                        }
+                        @if (Model.Work != null)
+                        {
+                            @Html.Partial("WorkExperiencePartial", Model.Work)
+                            <hr>
+                        }
+                        @if (Model.Skill.FirstOrDefault() != null)
+                        {
+                            @Html.Partial("SkillsPartial", Model.Skill)
+                            <hr>
+                        }
+                        @if (Model.Languages.FirstOrDefault() != null)
+                        {
+                            @Html.Partial("LanguagesPartial", Model.Languages)
+                        }
+                        <br>
+                        <br>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

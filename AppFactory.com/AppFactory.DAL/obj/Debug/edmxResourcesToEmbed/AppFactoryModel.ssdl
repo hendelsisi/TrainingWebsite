@@ -1,0 +1,523 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Applicant">
+    <Key>
+      <PropertyRef Name="ApplicantID" />
+    </Key>
+    <Property Name="ApplicantID" Type="bigint" Nullable="false" />
+    <Property Name="Address" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="City" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Nationality" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Resume" Type="varchar(max)" Nullable="false" />
+    <Property Name="CoverLetter" Type="varchar(max)" />
+  </EntityType>
+  <EntityType Name="Applicant_Language">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ApplicantID" Type="bigint" Nullable="false" />
+    <Property Name="LanguageID" Type="int" Nullable="false" />
+    <Property Name="SpokenLevel" Type="int" Nullable="false" />
+    <Property Name="WrittenLevel" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Applicant_Skill">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ApplicantID" Type="bigint" Nullable="false" />
+    <Property Name="SkillID" Type="int" Nullable="false" />
+    <Property Name="SkillLevel" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Application">
+    <Key>
+      <PropertyRef Name="ApplicationID" />
+    </Key>
+    <Property Name="ApplicationID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ApplicationName" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="StartDate" Type="datetime2" Precision="7" Nullable="false" />
+    <Property Name="EndDate" Type="datetime2" Precision="7" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Application_Applicant">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ApplicantID" Type="bigint" Nullable="false" />
+    <Property Name="ApplicationID" Type="bigint" Nullable="false" />
+    <Property Name="SubmissionDate" Type="datetime" Nullable="false" />
+    <Property Name="Status" Type="int" Nullable="false" />
+    <Property Name="Step" Type="int" Nullable="false" />
+    <Property Name="Location" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="AuditTrail">
+    <Key>
+      <PropertyRef Name="AuditID" />
+    </Key>
+    <Property Name="AuditID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Time" Type="datetime2" Precision="7" />
+    <Property Name="AreaAccessed" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="IPAddress" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="College">
+    <Key>
+      <PropertyRef Name="CollegeID" />
+    </Key>
+    <Property Name="CollegeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CollegeName" Type="varchar" MaxLength="150" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Country">
+    <Key>
+      <PropertyRef Name="CountryID" />
+    </Key>
+    <Property Name="CountryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CountryName" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Education">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ApplicantID" Type="bigint" Nullable="false" />
+    <Property Name="CollegeID" Type="int" Nullable="false" />
+    <Property Name="Degree" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="GeaduationYear" Type="date" Nullable="false" />
+    <Property Name="Grade" Type="float" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EmailConfig">
+    <Key>
+      <PropertyRef Name="ConfigID" />
+    </Key>
+    <Property Name="ConfigID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Host" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Port" Type="int" Nullable="false" />
+    <Property Name="EnableSsl" Type="bit" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EmailQueue">
+    <Key>
+      <PropertyRef Name="QueueID" />
+    </Key>
+    <Property Name="QueueID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserID" Type="bigint" Nullable="false" />
+    <Property Name="ConfigID" Type="int" Nullable="false" />
+    <Property Name="SendDate" Type="date" Nullable="false" />
+    <Property Name="TemplateID" Type="int" Nullable="false" />
+    <Property Name="Status" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EmailTemplate">
+    <Key>
+      <PropertyRef Name="TemplateID" />
+    </Key>
+    <Property Name="TemplateID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TemplateName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="TemplateSubject" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="TamplateBody" Type="varchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Language">
+    <Key>
+      <PropertyRef Name="LanguageID" />
+    </Key>
+    <Property Name="LanguageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LanguageName" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Message">
+    <Key>
+      <PropertyRef Name="MessageID" />
+    </Key>
+    <Property Name="MessageID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserID" Type="bigint" Nullable="false" />
+    <Property Name="SenderID" Type="bigint" Nullable="false" />
+    <Property Name="Subject" Type="nvarchar" MaxLength="50" />
+    <Property Name="Body" Type="nvarchar(max)" />
+    <Property Name="SentDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PersonalDetail">
+    <Key>
+      <PropertyRef Name="PersonalDetailID" />
+    </Key>
+    <Property Name="PersonalDetailID" Type="bigint" Nullable="false" />
+    <Property Name="FirstName" Type="varchar" MaxLength="45" Nullable="false" />
+    <Property Name="LastName" Type="varchar" MaxLength="45" Nullable="false" />
+    <Property Name="Gender" Type="bit" Nullable="false" />
+    <Property Name="DateOfBirth" Type="date" Nullable="false" />
+    <Property Name="TelephoneNumber" Type="varchar" MaxLength="25" />
+    <Property Name="MobileNumber" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="CountryID" Type="int" Nullable="false" />
+    <Property Name="PostalCode" Type="varchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="RoleID" />
+    </Key>
+    <Property Name="RoleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="45" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="225" Nullable="false" />
+    <Property Name="CreatedAt" Type="datetime2" Precision="7" Nullable="false" />
+    <Property Name="UpdatedAt" Type="datetime2" Precision="7" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Skill">
+    <Key>
+      <PropertyRef Name="SkillID" />
+    </Key>
+    <Property Name="SkillID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SkillName" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="60" Nullable="false" />
+    <Property Name="RoleID" Type="int" Nullable="false" />
+    <Property Name="CreatedAt" Type="datetime2" Precision="7" Nullable="false" />
+    <Property Name="UpdatedAt" Type="datetime2" Precision="7" Nullable="false" />
+    <Property Name="VerificationCode" Type="varchar" MaxLength="64" Nullable="false" />
+    <Property Name="RememberToken" Type="varchar" MaxLength="64" />
+    <Property Name="Active" Type="bit" Nullable="false" />
+    <Property Name="Online" Type="bit" Nullable="false" />
+    <Property Name="Avatar" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Salt" Type="varchar" MaxLength="256" Nullable="false" />
+    <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+    <Property Name="IsLocked" Type="bit" Nullable="false" />
+    <Property Name="LockEnd" Type="datetime2" Precision="7" />
+    <Property Name="InvalidAttempts" Type="int" Nullable="false" />
+    <Property Name="ExternLogin" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="WorkExperience">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ApplicantID" Type="bigint" Nullable="false" />
+    <Property Name="CompanyName" Type="varchar" MaxLength="50" />
+    <Property Name="Position" Type="varchar" MaxLength="50" />
+    <Property Name="Responsibility" Type="varchar(max)" />
+    <Property Name="StartDate" Type="date" />
+    <Property Name="EndDate" Type="date" />
+  </EntityType>
+  <Association Name="FK_Applicant_Language_Applicant">
+    <End Role="Applicant" Type="Self.Applicant" Multiplicity="1" />
+    <End Role="Applicant_Language" Type="Self.Applicant_Language" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Applicant">
+        <PropertyRef Name="ApplicantID" />
+      </Principal>
+      <Dependent Role="Applicant_Language">
+        <PropertyRef Name="ApplicantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Applicant_Language_Language">
+    <End Role="Language" Type="Self.Language" Multiplicity="1" />
+    <End Role="Applicant_Language" Type="Self.Applicant_Language" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Language">
+        <PropertyRef Name="LanguageID" />
+      </Principal>
+      <Dependent Role="Applicant_Language">
+        <PropertyRef Name="LanguageID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Applicant_Skill_Applicant">
+    <End Role="Applicant" Type="Self.Applicant" Multiplicity="1" />
+    <End Role="Applicant_Skill" Type="Self.Applicant_Skill" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Applicant">
+        <PropertyRef Name="ApplicantID" />
+      </Principal>
+      <Dependent Role="Applicant_Skill">
+        <PropertyRef Name="ApplicantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Applicant_Skill_Skill">
+    <End Role="Skill" Type="Self.Skill" Multiplicity="1" />
+    <End Role="Applicant_Skill" Type="Self.Applicant_Skill" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Skill">
+        <PropertyRef Name="SkillID" />
+      </Principal>
+      <Dependent Role="Applicant_Skill">
+        <PropertyRef Name="SkillID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Applicant_User1">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Applicant" Type="Self.Applicant" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Applicant">
+        <PropertyRef Name="ApplicantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Application_Applicant_Applicant">
+    <End Role="Applicant" Type="Self.Applicant" Multiplicity="1" />
+    <End Role="Application_Applicant" Type="Self.Application_Applicant" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Applicant">
+        <PropertyRef Name="ApplicantID" />
+      </Principal>
+      <Dependent Role="Application_Applicant">
+        <PropertyRef Name="ApplicantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Application_Applicant_Application">
+    <End Role="Application" Type="Self.Application" Multiplicity="1" />
+    <End Role="Application_Applicant" Type="Self.Application_Applicant" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Application">
+        <PropertyRef Name="ApplicationID" />
+      </Principal>
+      <Dependent Role="Application_Applicant">
+        <PropertyRef Name="ApplicationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Education_Applicant">
+    <End Role="Applicant" Type="Self.Applicant" Multiplicity="1" />
+    <End Role="Education" Type="Self.Education" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Applicant">
+        <PropertyRef Name="ApplicantID" />
+      </Principal>
+      <Dependent Role="Education">
+        <PropertyRef Name="ApplicantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Education_College">
+    <End Role="College" Type="Self.College" Multiplicity="1" />
+    <End Role="Education" Type="Self.Education" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="College">
+        <PropertyRef Name="CollegeID" />
+      </Principal>
+      <Dependent Role="Education">
+        <PropertyRef Name="CollegeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmailQueue_EmailConfig">
+    <End Role="EmailConfig" Type="Self.EmailConfig" Multiplicity="1" />
+    <End Role="EmailQueue" Type="Self.EmailQueue" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EmailConfig">
+        <PropertyRef Name="ConfigID" />
+      </Principal>
+      <Dependent Role="EmailQueue">
+        <PropertyRef Name="ConfigID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmailQueue_EmailTemplate">
+    <End Role="EmailTemplate" Type="Self.EmailTemplate" Multiplicity="1" />
+    <End Role="EmailQueue" Type="Self.EmailQueue" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EmailTemplate">
+        <PropertyRef Name="TemplateID" />
+      </Principal>
+      <Dependent Role="EmailQueue">
+        <PropertyRef Name="TemplateID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmailQueue_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="EmailQueue" Type="Self.EmailQueue" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="EmailQueue">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Message_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Message" Type="Self.Message" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Message">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Message_User1">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Message" Type="Self.Message" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Message">
+        <PropertyRef Name="SenderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PersonalDetail_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="PersonalDetail" Type="Self.PersonalDetail" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="PersonalDetail">
+        <PropertyRef Name="PersonalDetailID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PersonalDetails_Country">
+    <End Role="Country" Type="Self.Country" Multiplicity="1" />
+    <End Role="PersonalDetail" Type="Self.PersonalDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Country">
+        <PropertyRef Name="CountryID" />
+      </Principal>
+      <Dependent Role="PersonalDetail">
+        <PropertyRef Name="CountryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_Role">
+    <End Role="Role" Type="Self.Role" Multiplicity="1" />
+    <End Role="User" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="RoleID" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="RoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WorkExperience_Applicant">
+    <End Role="Applicant" Type="Self.Applicant" Multiplicity="1" />
+    <End Role="WorkExperience" Type="Self.WorkExperience" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Applicant">
+        <PropertyRef Name="ApplicantID" />
+      </Principal>
+      <Dependent Role="WorkExperience">
+        <PropertyRef Name="ApplicantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ModelStoreContainer">
+    <EntitySet Name="Applicant" EntityType="Self.Applicant" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Applicant_Language" EntityType="Self.Applicant_Language" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Applicant_Skill" EntityType="Self.Applicant_Skill" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Application" EntityType="Self.Application" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Application_Applicant" EntityType="Self.Application_Applicant" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AuditTrail" EntityType="Self.AuditTrail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="College" EntityType="Self.College" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Education" EntityType="Self.Education" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EmailConfig" EntityType="Self.EmailConfig" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EmailQueue" EntityType="Self.EmailQueue" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EmailTemplate" EntityType="Self.EmailTemplate" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Language" EntityType="Self.Language" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Message" EntityType="Self.Message" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PersonalDetail" EntityType="Self.PersonalDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Skill" EntityType="Self.Skill" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WorkExperience" EntityType="Self.WorkExperience" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Applicant_Language_Applicant" Association="Self.FK_Applicant_Language_Applicant">
+      <End Role="Applicant" EntitySet="Applicant" />
+      <End Role="Applicant_Language" EntitySet="Applicant_Language" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Applicant_Language_Language" Association="Self.FK_Applicant_Language_Language">
+      <End Role="Language" EntitySet="Language" />
+      <End Role="Applicant_Language" EntitySet="Applicant_Language" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Applicant_Skill_Applicant" Association="Self.FK_Applicant_Skill_Applicant">
+      <End Role="Applicant" EntitySet="Applicant" />
+      <End Role="Applicant_Skill" EntitySet="Applicant_Skill" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Applicant_Skill_Skill" Association="Self.FK_Applicant_Skill_Skill">
+      <End Role="Skill" EntitySet="Skill" />
+      <End Role="Applicant_Skill" EntitySet="Applicant_Skill" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Applicant_User1" Association="Self.FK_Applicant_User1">
+      <End Role="User" EntitySet="User" />
+      <End Role="Applicant" EntitySet="Applicant" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Application_Applicant_Applicant" Association="Self.FK_Application_Applicant_Applicant">
+      <End Role="Applicant" EntitySet="Applicant" />
+      <End Role="Application_Applicant" EntitySet="Application_Applicant" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Application_Applicant_Application" Association="Self.FK_Application_Applicant_Application">
+      <End Role="Application" EntitySet="Application" />
+      <End Role="Application_Applicant" EntitySet="Application_Applicant" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Education_Applicant" Association="Self.FK_Education_Applicant">
+      <End Role="Applicant" EntitySet="Applicant" />
+      <End Role="Education" EntitySet="Education" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Education_College" Association="Self.FK_Education_College">
+      <End Role="College" EntitySet="College" />
+      <End Role="Education" EntitySet="Education" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmailQueue_EmailConfig" Association="Self.FK_EmailQueue_EmailConfig">
+      <End Role="EmailConfig" EntitySet="EmailConfig" />
+      <End Role="EmailQueue" EntitySet="EmailQueue" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmailQueue_EmailTemplate" Association="Self.FK_EmailQueue_EmailTemplate">
+      <End Role="EmailTemplate" EntitySet="EmailTemplate" />
+      <End Role="EmailQueue" EntitySet="EmailQueue" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmailQueue_User" Association="Self.FK_EmailQueue_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="EmailQueue" EntitySet="EmailQueue" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Message_User" Association="Self.FK_Message_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Message" EntitySet="Message" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Message_User1" Association="Self.FK_Message_User1">
+      <End Role="User" EntitySet="User" />
+      <End Role="Message" EntitySet="Message" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PersonalDetail_User" Association="Self.FK_PersonalDetail_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="PersonalDetail" EntitySet="PersonalDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PersonalDetails_Country" Association="Self.FK_PersonalDetails_Country">
+      <End Role="Country" EntitySet="Country" />
+      <End Role="PersonalDetail" EntitySet="PersonalDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
+      <End Role="Role" EntitySet="Role" />
+      <End Role="User" EntitySet="User" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WorkExperience_Applicant" Association="Self.FK_WorkExperience_Applicant">
+      <End Role="Applicant" EntitySet="Applicant" />
+      <End Role="WorkExperience" EntitySet="WorkExperience" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

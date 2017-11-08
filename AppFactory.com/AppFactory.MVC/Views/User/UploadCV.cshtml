@@ -1,0 +1,33 @@
+﻿@model AppFactory.DAL.Applicant
+
+
+@using (Html.BeginForm("UploadCV","User",FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ApplicantID)
+
+        <div class="form-group">
+            
+            <div class="col-md-10">
+                <input type="file" name="ApplicantResume" id="ApplicantResume">
+                @Html.ValidationMessageFor(model => model.Resume, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+    if(ViewBag.Error != null)
+    {
+        @ViewBag.Error
+    }
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

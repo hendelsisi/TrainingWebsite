@@ -1,0 +1,42 @@
+﻿@model AppFactory.DAL.Message
+
+<div>
+    <dl class="dl-horizontal">
+        @*<dt>
+            @Html.DisplayName("From : ")
+        </dt>
+
+        <dd>
+            @Html.Display("Admin.")
+        </dd>*@
+
+        <dt>
+            @Html.DisplayName("To : ")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Time : ")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SentDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Subject)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Subject)
+        </dd>
+
+        <dd>
+            @Html.DisplayFor(model => model.Body)
+        </dd>
+
+    </dl>
+</div>

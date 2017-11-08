@@ -1,0 +1,24 @@
+﻿@model IEnumerable<AppFactory.DAL.Applicant_Skill>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Skill")
+        </th>
+        <th>
+            @Html.DisplayName("Level")
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Skill.SkillName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SkillLevel)
+            </td>
+        </tr>
+    }
+</table>

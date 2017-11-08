@@ -1,0 +1,216 @@
+﻿@model AppFactory.MVC.ViewModels.ProfileViewModel
+
+@{
+    ViewBag.Title = "Profile";
+}
+
+@section customCss {
+    <style>
+        #afeg-header-section {
+            position: fixed;
+            background-color: #82dafe;
+        }
+
+        #afeg-main {
+            margin-top: 50px;
+        }
+
+        dd {
+            margin-bottom: 10px;
+        }
+
+        #user-info {
+            margin-top: 150px;
+        }
+    </style>
+}
+
+<div id="afeg-main">
+    <div class="container">
+
+        <ul class="nav nav-pills nav-justified">
+            <li class="active"><a href="#Profile" data-toggle="tab">Profile</a></li>
+            <li><a href="#DashBoard" data-toggle="tab">Dashboard</a></li>
+            <li><a href="#AccountSettings" data-toggle="tab">Account Settings</a></li>
+            <li><a href="#Messages" data-toggle="tab">Messages</a></li>
+        </ul>
+
+        <div class="tab-content">
+            <div class="tab-pane fade in active" id="Profile">
+                <div class="row">
+                    <div class="afeg-spacer afeg-spacer-sm"></div>
+                    
+                    <div class="col-md-offset-1 col-md-3">
+                        @using (Html.BeginForm("ChangeProfilePhoto", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="form-horizontal">
+                                <fieldset>
+                                    <legend>Profile</legend>
+
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-10">
+                                            <img src="../@Model.Avatar" alt="Profile Picture" width="150" height="150" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-10">
+                                            <input type="file" value="Upload Photo" name="updatedPhoto" id="updatedPhoto" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-10">
+                                            <input type="submit" value="Save Photo" class="btn btn-primary" />
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="col-md-offset-1 col-md-7" id="user-info">
+                        <h4>@Model.FirstName  @Model.LastName</h4>
+                        <hr />
+                        <dl class="dl-horizontal">
+                            <dt>
+                                @Html.DisplayName("First Name")
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.FirstName)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayName("Last Name")
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.LastName)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayName("Gender")
+                            </dt>
+
+                            <dd>
+                                @if (Model.Gender == true)
+                                {
+                                    @Html.DisplayName("Male")
+                                }
+                                else
+                                {
+                                    @Html.DisplayName("Female")
+                                }
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayName("Email")
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Email)
+                            </dd>
+
+
+                            <dt>
+                                @Html.DisplayName("Date Of Birth")
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.DateOfBirth)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayName("Mobile Number")
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.MobileNumber)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayName("Country")
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Country.CountryName)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayName("PostalCode")
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.PostalCode)
+                            </dd>
+
+                        </dl>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="DashBoard">
+                <div class="row">
+                    <div class="afeg-spacer afeg-spacer-sm"></div>
+                    <div class="col-md-offset-1 col-md-9">
+                        @if (Model.model != null)
+                        {
+                            @Html.Partial("Dashboard", Model.model)
+                        }
+                        else
+                        {
+                            <p>No Applications Yet</p>
+                        }
+                    </div>
+
+                </div>
+            </div>
+            <div class="tab-pane fade" id="AccountSettings">
+                <div class="row">
+                    <div class="afeg-spacer afeg-spacer-sm"></div>
+                    <div class="col-md-offset-2 col-md-10">
+                        @Html.ActionLink("Change Password", "ChangePassword", "User", new { userId = Model.UserID }, null)
+                    </div>
+                    <div class="col-md-offset-2 col-md-10">
+                        @Html.ActionLink("Edit Profile", "EditProfile", "User", new { userId = Model.UserID }, null)
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="Messages">
+                <div class="row">
+                    <div class="afeg-spacer afeg-spacer-sm"></div>
+                    <div class="col-md-offset-1 col-md-10">
+                        @if (Model.Messages.Count == 0)
+                        {
+                            <p>You Have No Messages</p>
+                        }
+                        else
+                        {
+                            @Html.Partial("UserMessages" , Model.Messages)
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $(".btnShowMessage").click(function () {
+            $("#msg-modal-body").html(
+                $("#" + $(this).attr("data-msgnum") + "").html()
+            );
+        });
+    </script>
+    }
+@section scripts2{
+    <script>
+        $(".btnReply").click(function () {
+            $("#msg-modal-Content").html(
+                $("#" + $(this).attr("data-msgnum") + "").html()
+            );
+        });
+    </script>
+}

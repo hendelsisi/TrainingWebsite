@@ -1,0 +1,74 @@
+﻿@model AppFactory.MVC.ViewModels.ApplicantViewModel
+
+<div>
+    
+    <dl class="dl-horizontal">
+        
+        <dt>
+            @Html.DisplayName("Application Status")
+        </dt>
+
+        <dd>
+            @if (Model.Step == 6)
+            {
+                if (Model.AppStatus == 0)
+                {
+                    @Html.DisplayName("Rejected     ")
+                }
+                else if (Model.AppStatus == 1)
+                {
+                    @Html.DisplayName("NotSubmitted     ")
+                }
+                else if (Model.AppStatus == 2)
+                {
+                    @Html.DisplayName("Pending      ")
+                }
+                else if (Model.AppStatus == 3)
+                {
+                    @Html.DisplayName("Shortlisted      ")
+                }
+                else if (Model.AppStatus == 4)
+                {
+                    @Html.DisplayName("Interview        ")
+                }
+                else if (Model.AppStatus == 5)
+                {
+                    @Html.DisplayName("Accepted     ")
+                }
+
+                //View the application
+                @Html.ActionLink("View Your Application", "ViewApplicant", "User", new { appId = Model.ApplicantID }, null)
+
+            }
+            else
+            {
+                <p class="text-danger"> Your Application Is Not Complete</p>
+                if (Model.Step == 2)
+                {
+                    @Html.ActionLink("Complete Your Application","ApplicationFormEducation", "Applicant")
+                }
+                else if (Model.Step == 3)
+                {
+                    @Html.ActionLink("Complete Your Application", "ApplicationFormWorkExperience", "Applicant")
+                }
+                else if (Model.Step == 4)
+                {
+                    @Html.ActionLink("Complete Your Application", "ApplicationFormSkills", "Applicant")
+                }
+                else if (Model.Step == 5)
+                {
+                    @Html.ActionLink("Complete Your Application", "ApplicationFormLanguages", "Applicant")
+                }
+            }
+           
+        </dd>
+        
+        <dt>
+            @Html.DisplayNameFor(model => model.History)
+        </dt>
+        <dd>
+            @Html.Partial("History" , Model.History)
+        </dd>
+        
+    </dl>
+</div>

@@ -1,0 +1,213 @@
+﻿@model AppFactory.MVC.ViewModels.ApplicantDetailsViewModel
+
+@{
+
+    ViewBag.Title = "UsersList";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="content-wrapper" style="margin: 20px;">
+ <style>
+     .dl-horizontal dt {
+         text-align: left;
+         width: auto;
+         padding-right: 1em;
+     }
+
+     .dl-horizontal dd {
+         margin-left: 0;
+         margin-bottom: 1em;
+     }
+ </style>
+    <div class="col-md-4">
+        <img src="~/@Model.Avatar" style="border-radius: 50%;" alt="UserPhoto" height="200" width="200" />
+    </div>
+    <div class="col-md-8">
+        <h4 class="text-bold content-header">@Model.FirstName  @Model.LastName</h4>
+        <hr />
+
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayName("First Name")
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.FirstName)
+            </dd>
+            <dt>
+                @Html.DisplayName("Last Name")
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.LastName)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Gender)
+            </dt>
+            <dd>
+                @if (Model.Gender == true)
+                {
+                    @Html.DisplayName("Male")
+                }
+                else
+                {
+                    @Html.DisplayName("Female")
+                }
+            </dd>
+            <dt>
+                @Html.DisplayName("E-mail")
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Email)
+            </dd>
+            <dt>
+                @Html.DisplayName("Address")
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Address)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.City)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.City)
+            </dd>
+            <dt>
+                @Html.DisplayName("Country")
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Country.CountryName)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Nationality)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Nationality)
+            </dd>
+            <dt>
+                @Html.DisplayName("Date of Birth")
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.DateOfBirth)
+            </dd>
+            <dt>
+                @Html.DisplayName("Telephone Number")
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.TelephoneNumber)
+            </dd>
+            <dt>
+                @Html.DisplayName("Mobile Number")
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.MobileNumber)
+            </dd>
+            <dt>
+                @Html.DisplayName("Postal Code")
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.PostalCode)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Resume)
+            </dt>
+            <dd>
+                @if (!(String.IsNullOrEmpty(Model.Resume)|| String.IsNullOrWhiteSpace(Model.Resume)))
+                {
+                    @Html.ActionLink("Download File", "downloadFile", "Home", new { FilePath = Model.Resume }, null)
+                }
+                else{
+                    <p> No CV </p>
+                }
+            </dd>
+            <dt>
+                @Html.DisplayName("Cover Letter")
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.CoverLetter)
+            </dd>
+            <dt>
+                @Html.DisplayName("Status")
+            </dt>
+            <dd>
+                
+                @if (Model.WorkflowStatus == 0)
+                {
+                @Html.DisplayName("Rejected")
+                }
+                else if (Model.WorkflowStatus == 1)
+                {
+                @Html.DisplayName("NotSubmitted")
+                }
+                else if (Model.WorkflowStatus == 2)
+                {
+                @Html.DisplayName("Pending")
+                }
+                else if (Model.WorkflowStatus == 3)
+                {
+                @Html.DisplayName("Shortlisted")
+                }
+                else if (Model.WorkflowStatus == 4)
+                {
+                @Html.DisplayName("Interview")
+                }
+                else if (Model.WorkflowStatus == 5)
+                {
+                @Html.DisplayName("Accepted")
+                }
+            </dd>
+        </dl>
+        <hr>
+        @if (Model.Edu != null)
+        {
+            @Html.Partial("EducationPartial", Model.Edu)
+            <hr>
+        }
+        @if (Model.Work != null)
+        {
+            @Html.Partial("WorkExperiencePartial", Model.Work)
+            <hr>
+        }
+        @if (Model.Skill.FirstOrDefault() != null)
+        {
+            @Html.Partial("SkillsPartial", Model.Skill)
+            <hr>
+        }
+        @if (Model.Languages.FirstOrDefault() != null)
+        {
+            @Html.Partial("LanguagesPartial", Model. Languages)
+        }
+        <br>
+    </div>
+        
+    @if (Model.WorkflowStatus > 1 && Model.WorkflowStatus < 5)
+    {
+        <p>
+            @Html.ActionLink("Accept", "Accept", new { appId = Model.ApplicantID }, new { @class = "btn btn-primary", @style = "color:white" })
+            @Html.ActionLink("Reject", "Reject", new { appId = Model.ApplicantID }, new { @class = "btn btn-primary", @style = "color:white" }) 
+            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#ChangeRole">Leave A Message</button>
+            <!-- Modal -->
+            <div class="modal fade" id="ChangeRole" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Send Message</h4>
+                        </div>
+                        <div class="modal-body">
+                            @Html.Partial("LeaveMessage", Model.message)
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            @Html.ActionLink("Go Back", "AppsList", null, new { @class = "btn btn-primary", @style = "color:white" })
+        </p>
+    }
+    else
+    {
+        <p>
+            @Html.ActionLink("Go Back", "AppsList", null, new { @class = "btn btn-primary", @style = "color:white" })
+        </p>
+    }
+</div>

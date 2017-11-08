@@ -1,0 +1,45 @@
+﻿@model AppFactory.DAL.WorkExperience
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Company")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CompanyName)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Position")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Position)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Responsibility")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Responsibility)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Start Date")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StartDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("End Date")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EndDate)
+        </dd>
+    </dl>
+</div>

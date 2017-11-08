@@ -1,0 +1,90 @@
+﻿@using AppFactory.MVC.Repositories
+@using AppFactory.DAL
+
+@{
+    ViewBag.Title = "Home";
+}
+
+<div id="afeg-hero">
+    <a href="#afeg-main" class="smoothscroll afeg-arrow to-animate hero-animate-4"><i class="ti-angle-down"></i></a>
+    <!-- End afeg-arrow -->
+    <div class="container">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="afeg-hero-wrap">
+                <div class="afeg-hero-intro">
+                    <h1 class="to-animate hero-animate-1">Egypt AppFactory Program</h1>
+                    <p class="to-animate hero-animate-3">
+                        @if (Session["USER"] != null)
+                        {
+                            long userID = ((AppFactory.MVC.ViewModels.ProfileViewModel)Session["USER"]).UserID;
+                            @*<a href="/Applicant/ApplicationFormPersonalDetails/@userID" class="btn btn-outline btn-lg">Apply Now</a>*@
+
+                            GenericUnitOfWork unitOfWork = (GenericUnitOfWork)Session["UNITOFWORK"];
+                            GenericRepository<User> userRepository = unitOfWork.GetRepoInstance<User>();
+
+                            User usr = userRepository.GetBy(u => u.UserID == userID).FirstOrDefault();
+
+                            if (usr.RoleID == 2)
+                            {
+                                <a href="/Applicant/ApplicationFormPersonalDetails/@userID" class="btn btn-outline btn-lg">Apply Now</a>
+                            }
+                            else if (usr.RoleID == 1)
+                            {
+                                <a href="/Admin/Home/Dashboard" class="btn btn-outline btn-lg">Dashboard</a>
+                            }
+                        }
+                        else
+                        {
+                            <a href="/User/Register" class="btn btn-outline btn-lg">Sign Up</a>
+                        }
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="afeg-main">
+    <div class="container">
+
+        <!-- END row -->
+        <!-- End Spacer -->
+        <div class="row" id="afeg-works">
+            <div class="col-md-8 col-md-offset-2 text-center afeg-section-heading work-box">
+                <p class="afeg-sub"> &rdquo; Creativity is just connecting things. When you ask creative people how they did something, they feel a little guilty because they didn’t really do it, they just saw something. It seemed obvious to them after a while.  &rdquo;<cite class="author">&mdash; Steve Jobs</cite></p>
+                <div class="afeg-spacer afeg-spacer-sm"></div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-6 col-xxs-12 text-center afeg-work-item work-box">
+                <figure><a href="#"><img class="img-responsive" src="~/images/work_1.jpg" alt="EGYPT APPFACTORY"></a></figure>
+
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-6 col-xxs-12 text-center afeg-work-item work-box">
+                <figure><a href="#"><img class="img-responsive" src="~/images/work_2.jpg" alt="EGYPT APPFACTORY"></a></figure>
+
+            </div>
+            <div class="clearfix visible-sm-block visible-xs-block"></div>
+            <div class="col-md-4 col-sm-6 col-xs-6 col-xxs-12 text-center afeg-work-item work-box">
+                <figure><a href="#"><img class="img-responsive" src="~/images/work_3.jpg" alt="EGYPT APPFACTORY"></a></figure>
+
+            </div>
+            <div class="clearfix visible-md-block visible-lg-block"></div>
+            <div class="col-md-4 col-sm-6 col-xs-6 col-xxs-12 text-center afeg-work-item work-box">
+                <figure><a href="#"><img class="img-responsive" src="~/images/work_4.jpg" alt="EGYPT APPFACTORY"></a></figure>
+
+            </div>
+            <div class="clearfix visible-sm-block visible-xs-block"></div>
+            <div class="col-md-4 col-sm-6 col-xs-6 col-xxs-12 text-center afeg-work-item work-box">
+                <figure><a href="#"><img class="img-responsive" src="~/images/work_5.jpg" alt="EGYPT APPFACTORY"></a></figure>
+
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-6 col-xxs-12 text-center afeg-work-item work-box">
+                <figure><a href="#"><img class="img-responsive" src="~/images/work_6.jpg" alt="EGYPT APPFACTORY"></a></figure>
+
+            </div>
+
+        </div>
+        <!-- END row -->
+        <!-- END row -->
+    </div>
+    <!-- END container -->
+</div>
+<!-- END fhtco-main -->

@@ -1,0 +1,559 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Applicant">
+    <Key>
+      <PropertyRef Name="ApplicantID" />
+    </Key>
+    <Property Name="ApplicantID" Type="Int64" Nullable="false" />
+    <Property Name="Address" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Nationality" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Resume" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CoverLetter" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Applicant_Language" Relationship="Self.FK_Applicant_Language_Applicant" FromRole="Applicant" ToRole="Applicant_Language" />
+    <NavigationProperty Name="Applicant_Skill" Relationship="Self.FK_Applicant_Skill_Applicant" FromRole="Applicant" ToRole="Applicant_Skill" />
+    <NavigationProperty Name="User" Relationship="Self.FK_Applicant_User1" FromRole="Applicant" ToRole="User" />
+    <NavigationProperty Name="Application_Applicant" Relationship="Self.FK_Application_Applicant_Applicant" FromRole="Applicant" ToRole="Application_Applicant" />
+    <NavigationProperty Name="Educations" Relationship="Self.FK_Education_Applicant" FromRole="Applicant" ToRole="Education" />
+    <NavigationProperty Name="WorkExperiences" Relationship="Self.FK_WorkExperience_Applicant" FromRole="Applicant" ToRole="WorkExperience" />
+  </EntityType>
+  <EntityType Name="Applicant_Language">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ApplicantID" Type="Int64" Nullable="false" />
+    <Property Name="LanguageID" Type="Int32" Nullable="false" />
+    <Property Name="SpokenLevel" Type="Int32" Nullable="false" />
+    <Property Name="WrittenLevel" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Applicant" Relationship="Self.FK_Applicant_Language_Applicant" FromRole="Applicant_Language" ToRole="Applicant" />
+    <NavigationProperty Name="Language" Relationship="Self.FK_Applicant_Language_Language" FromRole="Applicant_Language" ToRole="Language" />
+  </EntityType>
+  <EntityType Name="Applicant_Skill">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ApplicantID" Type="Int64" Nullable="false" />
+    <Property Name="SkillID" Type="Int32" Nullable="false" />
+    <Property Name="SkillLevel" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Applicant" Relationship="Self.FK_Applicant_Skill_Applicant" FromRole="Applicant_Skill" ToRole="Applicant" />
+    <NavigationProperty Name="Skill" Relationship="Self.FK_Applicant_Skill_Skill" FromRole="Applicant_Skill" ToRole="Skill" />
+  </EntityType>
+  <EntityType Name="Application">
+    <Key>
+      <PropertyRef Name="ApplicationID" />
+    </Key>
+    <Property Name="ApplicationID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ApplicationName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="7" />
+    <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="7" />
+    <NavigationProperty Name="Application_Applicant" Relationship="Self.FK_Application_Applicant_Application" FromRole="Application" ToRole="Application_Applicant" />
+  </EntityType>
+  <EntityType Name="Application_Applicant">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ApplicantID" Type="Int64" Nullable="false" />
+    <Property Name="ApplicationID" Type="Int64" Nullable="false" />
+    <Property Name="SubmissionDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Status" Type="Int32" Nullable="false" />
+    <Property Name="Step" Type="Int32" Nullable="false" />
+    <Property Name="Location" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Applicant" Relationship="Self.FK_Application_Applicant_Applicant" FromRole="Application_Applicant" ToRole="Applicant" />
+    <NavigationProperty Name="Application" Relationship="Self.FK_Application_Applicant_Application" FromRole="Application_Applicant" ToRole="Application" />
+  </EntityType>
+  <EntityType Name="College">
+    <Key>
+      <PropertyRef Name="CollegeID" />
+    </Key>
+    <Property Name="CollegeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CollegeName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Educations" Relationship="Self.FK_Education_College" FromRole="College" ToRole="Education" />
+  </EntityType>
+  <EntityType Name="Country">
+    <Key>
+      <PropertyRef Name="CountryID" />
+    </Key>
+    <Property Name="CountryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CountryName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="PersonalDetails" Relationship="Self.FK_PersonalDetails_Country" FromRole="Country" ToRole="PersonalDetail" />
+  </EntityType>
+  <EntityType Name="Education">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ApplicantID" Type="Int64" Nullable="false" />
+    <Property Name="CollegeID" Type="Int32" Nullable="false" />
+    <Property Name="Degree" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="GeaduationYear" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Grade" Type="Double" Nullable="false" />
+    <NavigationProperty Name="Applicant" Relationship="Self.FK_Education_Applicant" FromRole="Education" ToRole="Applicant" />
+    <NavigationProperty Name="College" Relationship="Self.FK_Education_College" FromRole="Education" ToRole="College" />
+  </EntityType>
+  <EntityType Name="EmailConfig">
+    <Key>
+      <PropertyRef Name="ConfigID" />
+    </Key>
+    <Property Name="ConfigID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Host" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Port" Type="Int32" Nullable="false" />
+    <Property Name="EnableSsl" Type="Boolean" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="EmailQueues" Relationship="Self.FK_EmailQueue_EmailConfig" FromRole="EmailConfig" ToRole="EmailQueue" />
+  </EntityType>
+  <EntityType Name="EmailQueue">
+    <Key>
+      <PropertyRef Name="QueueID" />
+    </Key>
+    <Property Name="QueueID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="Int64" Nullable="false" />
+    <Property Name="ConfigID" Type="Int32" Nullable="false" />
+    <Property Name="SendDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="TemplateID" Type="Int32" Nullable="false" />
+    <Property Name="Status" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="EmailConfig" Relationship="Self.FK_EmailQueue_EmailConfig" FromRole="EmailQueue" ToRole="EmailConfig" />
+    <NavigationProperty Name="EmailTemplate" Relationship="Self.FK_EmailQueue_EmailTemplate" FromRole="EmailQueue" ToRole="EmailTemplate" />
+    <NavigationProperty Name="User" Relationship="Self.FK_EmailQueue_User" FromRole="EmailQueue" ToRole="User" />
+  </EntityType>
+  <EntityType Name="EmailTemplate">
+    <Key>
+      <PropertyRef Name="TemplateID" />
+    </Key>
+    <Property Name="TemplateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TemplateName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TemplateSubject" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TamplateBody" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="EmailQueues" Relationship="Self.FK_EmailQueue_EmailTemplate" FromRole="EmailTemplate" ToRole="EmailQueue" />
+  </EntityType>
+  <EntityType Name="Language">
+    <Key>
+      <PropertyRef Name="LanguageID" />
+    </Key>
+    <Property Name="LanguageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LanguageName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Applicant_Language" Relationship="Self.FK_Applicant_Language_Language" FromRole="Language" ToRole="Applicant_Language" />
+  </EntityType>
+  <EntityType Name="Message">
+    <Key>
+      <PropertyRef Name="MessageID" />
+    </Key>
+    <Property Name="MessageID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="Int64" Nullable="false" />
+    <Property Name="SenderID" Type="Int64" Nullable="false" />
+    <Property Name="Subject" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Body" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SentDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="User" Relationship="Self.FK_Message_User" FromRole="Message" ToRole="User" />
+    <NavigationProperty Name="User1" Relationship="Self.FK_Message_User1" FromRole="Message" ToRole="User" />
+  </EntityType>
+  <EntityType Name="PersonalDetail">
+    <Key>
+      <PropertyRef Name="PersonalDetailID" />
+    </Key>
+    <Property Name="PersonalDetailID" Type="Int64" Nullable="false" />
+    <Property Name="FirstName" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="LastName" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Gender" Type="Boolean" Nullable="false" />
+    <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="TelephoneNumber" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="MobileNumber" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CountryID" Type="Int32" Nullable="false" />
+    <Property Name="PostalCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Country" Relationship="Self.FK_PersonalDetails_Country" FromRole="PersonalDetail" ToRole="Country" />
+    <NavigationProperty Name="User" Relationship="Self.FK_PersonalDetail_User" FromRole="PersonalDetail" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="RoleID" />
+    </Key>
+    <Property Name="RoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="225" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="7" />
+    <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="7" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_User_Role" FromRole="Role" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Skill">
+    <Key>
+      <PropertyRef Name="SkillID" />
+    </Key>
+    <Property Name="SkillID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SkillName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Applicant_Skill" Relationship="Self.FK_Applicant_Skill_Skill" FromRole="Skill" ToRole="Applicant_Skill" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="RoleID" Type="Int32" Nullable="false" />
+    <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="7" />
+    <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="7" />
+    <Property Name="VerificationCode" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="RememberToken" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+    <Property Name="Online" Type="Boolean" Nullable="false" />
+    <Property Name="Avatar" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Salt" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="IsLocked" Type="Boolean" Nullable="false" />
+    <Property Name="LockEnd" Type="DateTime" Precision="7" />
+    <Property Name="InvalidAttempts" Type="Int32" Nullable="false" />
+    <Property Name="ExternLogin" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Applicant" Relationship="Self.FK_Applicant_User1" FromRole="User" ToRole="Applicant" />
+    <NavigationProperty Name="EmailQueues" Relationship="Self.FK_EmailQueue_User" FromRole="User" ToRole="EmailQueue" />
+    <NavigationProperty Name="Messages" Relationship="Self.FK_Message_User" FromRole="User" ToRole="Message" />
+    <NavigationProperty Name="Messages1" Relationship="Self.FK_Message_User1" FromRole="User" ToRole="Message" />
+    <NavigationProperty Name="PersonalDetail" Relationship="Self.FK_PersonalDetail_User" FromRole="User" ToRole="PersonalDetail" />
+    <NavigationProperty Name="Role" Relationship="Self.FK_User_Role" FromRole="User" ToRole="Role" />
+  </EntityType>
+  <EntityType Name="WorkExperience">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ApplicantID" Type="Int64" Nullable="false" />
+    <Property Name="CompanyName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Position" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Responsibility" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="StartDate" Type="DateTime" Precision="0" />
+    <Property Name="EndDate" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="Applicant" Relationship="Self.FK_WorkExperience_Applicant" FromRole="WorkExperience" ToRole="Applicant" />
+  </EntityType>
+  <Association Name="FK_Applicant_Language_Applicant">
+    <End Role="Applicant" Type="Self.Applicant" Multiplicity="1" />
+    <End Role="Applicant_Language" Type="Self.Applicant_Language" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Applicant">
+        <PropertyRef Name="ApplicantID" />
+      </Principal>
+      <Dependent Role="Applicant_Language">
+        <PropertyRef Name="ApplicantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Applicant_Skill_Applicant">
+    <End Role="Applicant" Type="Self.Applicant" Multiplicity="1" />
+    <End Role="Applicant_Skill" Type="Self.Applicant_Skill" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Applicant">
+        <PropertyRef Name="ApplicantID" />
+      </Principal>
+      <Dependent Role="Applicant_Skill">
+        <PropertyRef Name="ApplicantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Applicant_User1">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Applicant" Type="Self.Applicant" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Applicant">
+        <PropertyRef Name="ApplicantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Application_Applicant_Applicant">
+    <End Role="Applicant" Type="Self.Applicant" Multiplicity="1" />
+    <End Role="Application_Applicant" Type="Self.Application_Applicant" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Applicant">
+        <PropertyRef Name="ApplicantID" />
+      </Principal>
+      <Dependent Role="Application_Applicant">
+        <PropertyRef Name="ApplicantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Education_Applicant">
+    <End Role="Applicant" Type="Self.Applicant" Multiplicity="1" />
+    <End Role="Education" Type="Self.Education" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Applicant">
+        <PropertyRef Name="ApplicantID" />
+      </Principal>
+      <Dependent Role="Education">
+        <PropertyRef Name="ApplicantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WorkExperience_Applicant">
+    <End Role="Applicant" Type="Self.Applicant" Multiplicity="1" />
+    <End Role="WorkExperience" Type="Self.WorkExperience" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Applicant">
+        <PropertyRef Name="ApplicantID" />
+      </Principal>
+      <Dependent Role="WorkExperience">
+        <PropertyRef Name="ApplicantID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Applicant_Language_Language">
+    <End Role="Language" Type="Self.Language" Multiplicity="1" />
+    <End Role="Applicant_Language" Type="Self.Applicant_Language" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Language">
+        <PropertyRef Name="LanguageID" />
+      </Principal>
+      <Dependent Role="Applicant_Language">
+        <PropertyRef Name="LanguageID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Applicant_Skill_Skill">
+    <End Role="Skill" Type="Self.Skill" Multiplicity="1" />
+    <End Role="Applicant_Skill" Type="Self.Applicant_Skill" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Skill">
+        <PropertyRef Name="SkillID" />
+      </Principal>
+      <Dependent Role="Applicant_Skill">
+        <PropertyRef Name="SkillID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Application_Applicant_Application">
+    <End Role="Application" Type="Self.Application" Multiplicity="1" />
+    <End Role="Application_Applicant" Type="Self.Application_Applicant" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Application">
+        <PropertyRef Name="ApplicationID" />
+      </Principal>
+      <Dependent Role="Application_Applicant">
+        <PropertyRef Name="ApplicationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Education_College">
+    <End Role="College" Type="Self.College" Multiplicity="1" />
+    <End Role="Education" Type="Self.Education" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="College">
+        <PropertyRef Name="CollegeID" />
+      </Principal>
+      <Dependent Role="Education">
+        <PropertyRef Name="CollegeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PersonalDetails_Country">
+    <End Role="Country" Type="Self.Country" Multiplicity="1" />
+    <End Role="PersonalDetail" Type="Self.PersonalDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Country">
+        <PropertyRef Name="CountryID" />
+      </Principal>
+      <Dependent Role="PersonalDetail">
+        <PropertyRef Name="CountryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmailQueue_EmailConfig">
+    <End Role="EmailConfig" Type="Self.EmailConfig" Multiplicity="1" />
+    <End Role="EmailQueue" Type="Self.EmailQueue" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EmailConfig">
+        <PropertyRef Name="ConfigID" />
+      </Principal>
+      <Dependent Role="EmailQueue">
+        <PropertyRef Name="ConfigID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmailQueue_EmailTemplate">
+    <End Role="EmailTemplate" Type="Self.EmailTemplate" Multiplicity="1" />
+    <End Role="EmailQueue" Type="Self.EmailQueue" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EmailTemplate">
+        <PropertyRef Name="TemplateID" />
+      </Principal>
+      <Dependent Role="EmailQueue">
+        <PropertyRef Name="TemplateID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmailQueue_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="EmailQueue" Type="Self.EmailQueue" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="EmailQueue">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Message_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Message" Type="Self.Message" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Message">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Message_User1">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Message" Type="Self.Message" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Message">
+        <PropertyRef Name="SenderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PersonalDetail_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="PersonalDetail" Type="Self.PersonalDetail" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="PersonalDetail">
+        <PropertyRef Name="PersonalDetailID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_Role">
+    <End Role="Role" Type="Self.Role" Multiplicity="1" />
+    <End Role="User" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="RoleID" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="RoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="AppFactoryEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Applicants" EntityType="Self.Applicant" />
+    <EntitySet Name="Applicant_Language" EntityType="Self.Applicant_Language" />
+    <EntitySet Name="Applicant_Skill" EntityType="Self.Applicant_Skill" />
+    <EntitySet Name="Applications" EntityType="Self.Application" />
+    <EntitySet Name="Application_Applicant" EntityType="Self.Application_Applicant" />
+    <EntitySet Name="Colleges" EntityType="Self.College" />
+    <EntitySet Name="Countries" EntityType="Self.Country" />
+    <EntitySet Name="Educations" EntityType="Self.Education" />
+    <EntitySet Name="EmailConfigs" EntityType="Self.EmailConfig" />
+    <EntitySet Name="EmailQueues" EntityType="Self.EmailQueue" />
+    <EntitySet Name="EmailTemplates" EntityType="Self.EmailTemplate" />
+    <EntitySet Name="Languages" EntityType="Self.Language" />
+    <EntitySet Name="Messages" EntityType="Self.Message" />
+    <EntitySet Name="PersonalDetails" EntityType="Self.PersonalDetail" />
+    <EntitySet Name="Roles" EntityType="Self.Role" />
+    <EntitySet Name="Skills" EntityType="Self.Skill" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <EntitySet Name="WorkExperiences" EntityType="Self.WorkExperience" />
+    <AssociationSet Name="FK_Applicant_Language_Applicant" Association="Self.FK_Applicant_Language_Applicant">
+      <End Role="Applicant" EntitySet="Applicants" />
+      <End Role="Applicant_Language" EntitySet="Applicant_Language" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Applicant_Skill_Applicant" Association="Self.FK_Applicant_Skill_Applicant">
+      <End Role="Applicant" EntitySet="Applicants" />
+      <End Role="Applicant_Skill" EntitySet="Applicant_Skill" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Applicant_User1" Association="Self.FK_Applicant_User1">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Applicant" EntitySet="Applicants" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Application_Applicant_Applicant" Association="Self.FK_Application_Applicant_Applicant">
+      <End Role="Applicant" EntitySet="Applicants" />
+      <End Role="Application_Applicant" EntitySet="Application_Applicant" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Education_Applicant" Association="Self.FK_Education_Applicant">
+      <End Role="Applicant" EntitySet="Applicants" />
+      <End Role="Education" EntitySet="Educations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WorkExperience_Applicant" Association="Self.FK_WorkExperience_Applicant">
+      <End Role="Applicant" EntitySet="Applicants" />
+      <End Role="WorkExperience" EntitySet="WorkExperiences" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Applicant_Language_Language" Association="Self.FK_Applicant_Language_Language">
+      <End Role="Language" EntitySet="Languages" />
+      <End Role="Applicant_Language" EntitySet="Applicant_Language" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Applicant_Skill_Skill" Association="Self.FK_Applicant_Skill_Skill">
+      <End Role="Skill" EntitySet="Skills" />
+      <End Role="Applicant_Skill" EntitySet="Applicant_Skill" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Application_Applicant_Application" Association="Self.FK_Application_Applicant_Application">
+      <End Role="Application" EntitySet="Applications" />
+      <End Role="Application_Applicant" EntitySet="Application_Applicant" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Education_College" Association="Self.FK_Education_College">
+      <End Role="College" EntitySet="Colleges" />
+      <End Role="Education" EntitySet="Educations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PersonalDetails_Country" Association="Self.FK_PersonalDetails_Country">
+      <End Role="Country" EntitySet="Countries" />
+      <End Role="PersonalDetail" EntitySet="PersonalDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmailQueue_EmailConfig" Association="Self.FK_EmailQueue_EmailConfig">
+      <End Role="EmailConfig" EntitySet="EmailConfigs" />
+      <End Role="EmailQueue" EntitySet="EmailQueues" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmailQueue_EmailTemplate" Association="Self.FK_EmailQueue_EmailTemplate">
+      <End Role="EmailTemplate" EntitySet="EmailTemplates" />
+      <End Role="EmailQueue" EntitySet="EmailQueues" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmailQueue_User" Association="Self.FK_EmailQueue_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="EmailQueue" EntitySet="EmailQueues" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Message_User" Association="Self.FK_Message_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Message" EntitySet="Messages" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Message_User1" Association="Self.FK_Message_User1">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Message" EntitySet="Messages" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PersonalDetail_User" Association="Self.FK_PersonalDetail_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="PersonalDetail" EntitySet="PersonalDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
+      <End Role="Role" EntitySet="Roles" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+    <EntitySet Name="AuditTrails" EntityType="Model.AuditTrail" />
+  </EntityContainer>
+  <EntityType Name="AuditTrail">
+    <Key>
+      <PropertyRef Name="AuditID" />
+    </Key>
+    <Property Name="AuditID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Time" Type="DateTime" Precision="7" />
+    <Property Name="AreaAccessed" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="IPAddress" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+</Schema>

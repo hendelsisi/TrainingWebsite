@@ -1,0 +1,10 @@
+C:\Users\hend\Documents\Project\Amira\AppFactoryWebsite-master\AppFactory.com\AppFactory.DAL\bin\Debug\AppFactory.DAL.dll.config
+C:\Users\hend\Documents\Project\Amira\AppFactoryWebsite-master\AppFactory.com\AppFactory.DAL\bin\Debug\AppFactory.DAL.dll
+C:\Users\hend\Documents\Project\Amira\AppFactoryWebsite-master\AppFactory.com\AppFactory.DAL\bin\Debug\AppFactory.DAL.pdb
+C:\Users\hend\Documents\Project\Amira\AppFactoryWebsite-master\AppFactory.com\AppFactory.DAL\bin\Debug\EntityFramework.dll
+C:\Users\hend\Documents\Project\Amira\AppFactoryWebsite-master\AppFactory.com\AppFactory.DAL\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\hend\Documents\Project\Amira\AppFactoryWebsite-master\AppFactory.com\AppFactory.DAL\bin\Debug\EntityFramework.xml
+C:\Users\hend\Documents\Project\Amira\AppFactoryWebsite-master\AppFactory.com\AppFactory.DAL\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\hend\Documents\Project\Amira\AppFactoryWebsite-master\AppFactory.com\AppFactory.DAL\obj\Debug\AppFactory.DAL.dll
+C:\Users\hend\Documents\Project\Amira\AppFactoryWebsite-master\AppFactory.com\AppFactory.DAL\obj\Debug\AppFactory.DAL.pdb
+C:\Users\hend\Documents\Project\Amira\AppFactoryWebsite-master\AppFactory.com\AppFactory.DAL\obj\Debug\AppFactory.DAL.csprojResolveAssemblyReference.cache

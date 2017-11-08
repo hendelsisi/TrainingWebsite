@@ -1,0 +1,17 @@
+﻿@model AppFactory.DAL.User
+
+@using (Html.BeginForm("ChangeRole", "Home", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <p class="text-blue"> Are You Sure you want to change user's role ?</p>
+        @Html.HiddenFor(model => model.UserID)
+        <div class="form-group">
+            <div class="modal-footer">
+                <input type="submit" value="YES" class="btn btn-default" />
+                <button type="button" class="btn btn-default pull-right" data-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+}

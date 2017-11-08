@@ -1,0 +1,5 @@
+D:\AppFactoryWebsite-master\AppFactory.com\AppFactory.Mailing\bin\Debug\AppFactory.Email.dll
+D:\AppFactoryWebsite-master\AppFactory.com\AppFactory.Mailing\bin\Debug\AppFactory.Email.pdb
+D:\AppFactoryWebsite-master\AppFactory.com\AppFactory.Mailing\obj\Debug\AppFactory.Mailing.csprojResolveAssemblyReference.cache
+D:\AppFactoryWebsite-master\AppFactory.com\AppFactory.Mailing\obj\Debug\AppFactory.Email.dll
+D:\AppFactoryWebsite-master\AppFactory.com\AppFactory.Mailing\obj\Debug\AppFactory.Email.pdb

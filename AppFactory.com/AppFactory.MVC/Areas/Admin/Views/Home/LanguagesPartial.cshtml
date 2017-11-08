@@ -1,0 +1,68 @@
+﻿@model IEnumerable<AppFactory.DAL.Applicant_Language>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Language.LanguageName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SpokenLevel)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.WrittenLevel)
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Language.LanguageName)
+        </td>
+        <td>
+            @if(item.SpokenLevel == 1)
+            {
+                @Html.DisplayName("Beginner")
+            }else if(item.SpokenLevel == 2)
+            {
+                @Html.DisplayName("Good")
+            }
+            else if (item.SpokenLevel == 3)
+            {
+                @Html.DisplayName("Very Good")
+            }
+            else if (item.SpokenLevel == 4)
+            {
+                @Html.DisplayName("Fluent")
+            }
+            else
+            {
+                @Html.DisplayName("Native")
+            }
+        </td>
+        <td>
+            @if (item.WrittenLevel == 1)
+            {
+                @Html.DisplayName("Beginner")
+            }
+            else if (item.WrittenLevel == 2)
+            {
+                @Html.DisplayName("Good")
+            }
+            else if (item.WrittenLevel == 3)
+            {
+                @Html.DisplayName("Very Good")
+            }
+            else if (item.WrittenLevel == 4)
+            {
+                @Html.DisplayName("Fluent")
+            }
+            else
+            {
+                @Html.DisplayName("Native")
+            }
+        </td>
+        
+    </tr>
+}
+
+</table>

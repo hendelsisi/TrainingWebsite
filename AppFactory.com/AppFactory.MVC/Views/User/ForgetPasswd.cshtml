@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewBag.Title = "ForgetPasswd";
+}
+
+@section customCss {
+    <style>
+        #afeg-header-section {
+            position: fixed;
+            background-color: #82dafe;
+        }
+
+        #afeg-main {
+            margin-top: 50px;
+        }
+    </style>
+}
+
+<div id="afeg-main">
+    <div class="container">
+        <div class="row">
+            <div class="afeg-spacer afeg-spacer-sm"></div>
+            <div class="col-md-8">
+                @using (Html.BeginForm("ForgetPasswd", "User", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+                        <fieldset>
+                            <legend>Forget Password</legend>
+                            <div class="form-group">
+                                @Html.Label("Email", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.Editor("email", new { htmlAttributes = new { @class = "form-control" } })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="submit" value="Submit" class="btn btn-primary" />
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                }
+
+                @if (ViewBag.ErrorMessage != null)
+                {
+                    <h5 class="text-danger"> @ViewBag.ErrorMessage </h5>
+                }
+            </div>
+        </div>
+    </div>
+</div>

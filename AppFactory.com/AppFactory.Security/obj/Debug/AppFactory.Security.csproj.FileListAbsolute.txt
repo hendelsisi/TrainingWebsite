@@ -1,0 +1,5 @@
+D:\AppFactoryWebsite-master\AppFactory.com\AppFactory.Security\bin\Debug\AppFactory.Security.dll
+D:\AppFactoryWebsite-master\AppFactory.com\AppFactory.Security\bin\Debug\AppFactory.Security.pdb
+D:\AppFactoryWebsite-master\AppFactory.com\AppFactory.Security\obj\Debug\AppFactory.Security.csprojResolveAssemblyReference.cache
+D:\AppFactoryWebsite-master\AppFactory.com\AppFactory.Security\obj\Debug\AppFactory.Security.dll
+D:\AppFactoryWebsite-master\AppFactory.com\AppFactory.Security\obj\Debug\AppFactory.Security.pdb
